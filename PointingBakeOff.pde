@@ -8,8 +8,8 @@ import processing.core.PApplet;
 //when in doubt, consult the Processsing reference: https://processing.org/reference/
 
 int margin = 200; //set the margin around the squares
-final int padding = 50; // padding between buttons and also their width/height
-final int buttonSize = 40; // padding between buttons and also their width/height
+final int padding = 10; // padding between buttons and also their width/height
+final int buttonSize = 50; // padding between buttons and also their width/height
 ArrayList<Integer> trials = new ArrayList<Integer>(); //contains the order of buttons that activate in the test
 int trialNum = 0; //the current trial number (indexes into trials array above)
 int startTime = 0; // time starts when the first click is captured
@@ -130,12 +130,20 @@ void drawButton(int i)
 {
   Rectangle bounds = getButtonLocation(i);
 
-  if (trials.get(trialNum) == i) // see if current button is the target
+  if (trials.get(trialNum) == i) { // see if current button is the target 
     fill(0, 255, 255); // if so, fill cyan
-  else
+    rect(bounds.x, bounds.y, bounds.width, bounds.height); //draw button
+    stroke(255, 0, 0);
+    strokeWeight(10);
+    line(mouseX, mouseY, bounds.x + bounds.width/2, bounds.y + bounds.width/2);
+    noStroke();
+  }
+  else {
     fill(200); // if not, fill gray
+    rect(bounds.x, bounds.y, bounds.width, bounds.height); //draw button
+  }
 
-  rect(bounds.x, bounds.y, bounds.width, bounds.height); //draw button
+  
 }
 
 void mouseMoved()
