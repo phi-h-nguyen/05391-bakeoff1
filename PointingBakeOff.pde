@@ -8,7 +8,7 @@ import processing.core.PApplet;
 //when in doubt, consult the Processsing reference: https://processing.org/reference/
 
 int margin = 200; //set the margin around the squares
-final int padding = 10; // padding between buttons and also their width/height
+final int padding = 8; // padding between buttons and also their width/height
 final int buttonSize = 50; // padding between buttons and also their width/height
 ArrayList<Integer> trials = new ArrayList<Integer>(); //contains the order of buttons that activate in the test
 int trialNum = 0; //the current trial number (indexes into trials array above)
@@ -77,9 +77,11 @@ void draw()
 
   for (int i = 0; i < 16; i++)// for all button
     drawButton(i); //draw button
-
-  fill(255, 0, 0, 200); // set fill color to translucent red
-  ellipse(mouseX, mouseY, 20, 20); //draw user cursor as a circle with a diameter of 20
+  
+  
+  fill(255, 255, 255, 200);
+  rect(0, mouseY-1, 800, 2);
+  rect(mouseX-1, 0, 2, 800);
 }
 
 void mousePressed() // test to see if hit was in target!
@@ -104,7 +106,7 @@ void mousePressed() // test to see if hit was in target!
   {
     System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
     hits++; 
-  } 
+  }
   else
   {
     System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
@@ -148,6 +150,7 @@ void drawButton(int i)
 
 void mouseMoved()
 {
+  
    //can do stuff everytime the mouse is moved (i.e., not clicked)
    //https://processing.org/reference/mouseMoved_.html
 }
