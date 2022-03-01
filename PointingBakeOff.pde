@@ -8,7 +8,7 @@ import processing.core.PApplet;
 //when in doubt, consult the Processsing reference: https://processing.org/reference/
 
 int margin = 200; //set the margin around the squares
-final int padding = 10; // padding between buttons and also their width/height
+final int padding = 50; // padding between buttons and also their width/height
 final int buttonSize = 40; // padding between buttons and also their width/height
 ArrayList<Integer> trials = new ArrayList<Integer>(); //contains the order of buttons that activate in the test
 int trialNum = 0; //the current trial number (indexes into trials array above)
@@ -61,7 +61,7 @@ void draw()
   if (trialNum >= trials.size()) //check to see if test is over
   {
     float timeTaken = (finishTime - startTime) / 1000f;
-    float penalty = constrain(((95f - ((float)hits * 100f / (float)(hits + misses))) * .2f),0,100);
+    float penalty = constrain(((95f - ((float)hits * 100f / (float)(hits + misses))) *.2f),0,100);
     fill(255); //set fill color to white
     //write to screen (not console)
     text("Finished!", width / 2, height / 2); 
@@ -73,7 +73,7 @@ void draw()
     text("Average time for each button + penalty: " + nf(((timeTaken) / (float)(hits + misses) + penalty),0,3) + " sec", width / 2, height / 2 + 140);
     return; //return, nothing else to do now test is over
   }
-
+  
   Rectangle bounds = getButtonLocation(trials.get(trialNum));
   
   //check to see if mouse cursor is inside button 
@@ -114,8 +114,7 @@ void mousePressed() // test to see if hit was in target!
   if (trialNum == 0) //check if first click, if so, start timer
     startTime = millis();
   
-  if (trialNum == trials.size() - 1) //check if final click
-  {
+  if (trialNum == trials.size() - 1) {//check if final click
     finishTime = millis();
     //write to terminal some output. Useful for debugging too.
     println("we're done!");
@@ -124,13 +123,11 @@ void mousePressed() // test to see if hit was in target!
   Rectangle bounds = getButtonLocation(trials.get(trialNum));
   
   //check to see if mouse cursor is inside button 
-  if ((mouseX > bounds.x && mouseX < bounds.x + bounds.width) && (mouseY > bounds.y && mouseY < bounds.y + bounds.height)) // test to see if hit was within bounds
-  {
+  if ((mouseX > bounds.x && mouseX < bounds.x + bounds.width) && (mouseY > bounds.y && mouseY < bounds.y + bounds.height)) { // test to see if hit was within bounds
     System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
     hits++; 
   }
-  else
-  {
+  else {
     System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
     misses++;
   }
