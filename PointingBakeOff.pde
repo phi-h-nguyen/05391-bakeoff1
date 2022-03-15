@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import processing.core.PApplet;
 
+
+int participant = 1;
+int startX = 400;
+int startY = 400;
+int prevTime = millis();
+
 //when in doubt, consult the Processsing reference: https://processing.org/reference/
 
 int margin = 200; //set the margin around the squares
@@ -18,7 +24,7 @@ int hits = 0; //number of successful clicks
 int misses = 0; //number of missed clicks
 Robot robot; //initialized in setup 
 
-int numRepeats = 1; //sets the number of times each button repeats in the test
+int numRepeats = 20; //sets the number of times each button repeats in the test
 
 boolean hovering = false;
 
@@ -103,7 +109,6 @@ void draw()
   rect(0, mouseY - 2, 800, 4);
   rect(mouseX - 2, 0, 4, 800);
   
-  
 }
 
 void mousePressed() // test to see if hit was in target!
@@ -117,22 +122,29 @@ void mousePressed() // test to see if hit was in target!
   if (trialNum == trials.size() - 1) {//check if final click
     finishTime = millis();
     //write to terminal some output. Useful for debugging too.
-    println("we're done!");
   }
   
   Rectangle bounds = getButtonLocation(trials.get(trialNum));
-  
+  int centerX = bounds.x + buttonSize/2;
+  int centerY = bounds.y + buttonSize/2;
+  String time = nf(((float)(millis() - prevTime)/1000), 0, 3);
+
   //check to see if mouse cursor is inside button 
   if ((mouseX > bounds.x && mouseX < bounds.x + bounds.width) && (mouseY > bounds.y && mouseY < bounds.y + bounds.height)) { // test to see if hit was within bounds
-    System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
+    // System.out.println("HIT! " + trialNum + " " + (millis() - startTime)); // success
+    System.out.println(trialNum + ", " + participant + ", " + startX + ", " + startY + ", " + centerX + ", " + centerY + ", " + buttonSize + ", " + time + ", 1"); // success
     hits++; 
   }
   else {
-    System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
+    // System.out.println("MISSED! " + trialNum + " " + (millis() - startTime)); // fail
+    System.out.println(trialNum + ", " + participant + ", " + startX + ", " + startY + ", " + centerX + ", " + centerY + ", " + buttonSize + ", " + time + ", 0"); // failure
     misses++;
   }
   
   trialNum++; //Increment trial number
+  prevTime = millis();
+  startX = mouseX;
+  startY = mouseY;
   
   //in this example code, we move the mouse back to the middle
   //robot.mouseMove(width/2, (height)/2); //on click, move cursor to roughly center of window!
